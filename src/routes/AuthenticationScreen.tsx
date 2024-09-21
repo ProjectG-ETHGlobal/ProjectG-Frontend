@@ -65,9 +65,9 @@ export default function AuthenticationScreen() {
 							<Link to={"/user"}>
 								<Button disabled>Customer Screen</Button>
 							</Link>
-							{/* <Link to={"/supplier"}>
+							<Link to={"/supplier"}>
 								<Button disabled>Supplier Screen</Button>
-							</Link> */}
+							</Link>
 						</CardHeader>
 						<CardContent>
 							<motion.div
