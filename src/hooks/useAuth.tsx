@@ -1,27 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext } from "react";
 
-const AuthContext = createContext({
-	isAuthenticated: false,
-	login: () => Promise.resolve(),
-	logout: () => Promise.resolve(),
+export const AuthContext = createContext({
+	authenticatedUser: null,
+	accessToken: null,
+	login: (userDetails: any, accessToken: string | null) => {},
+	logout: () => {},
 });
 
 function useAuth() {
-	const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+	const [authenticatedUser, setAuthenticatedUser] = React.useState<any>(null);
+	const [accessToken, setAccessToken] = React.useState<string | null>(null);
 
 	return {
-		isAuthenticated,
-		login() {
-			return new Promise<void>((res) => {
-				setIsAuthenticated(true);
-				res();
-			});
+		authenticatedUser,
+		accessToken,
+		login(userDetails: any, accessToken: string | null) {
+			console.log("userDetails", userDetails, "\naccessToken", accessToken);
+			setAuthenticatedUser(userDetails);
+			setAccessToken(accessToken);
 		},
 		logout() {
-			return new Promise<void>((res) => {
-				setIsAuthenticated(false);
-				res();
-			});
+			setAuthenticatedUser(null);
+			setAccessToken(null);
 		},
 	};
 }

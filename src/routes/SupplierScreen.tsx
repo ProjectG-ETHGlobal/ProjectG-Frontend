@@ -15,8 +15,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { AuthContext } from "@/hooks/useAuth";
 import { ChevronDownIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
 	id: string;
@@ -113,6 +115,17 @@ const DeliveryStatus = ({ status }: { status: Product["status"] }) => {
 };
 
 export default function SupplierScreen() {
+	const { authenticatedUser } = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	console.log("authenticatedUser", authenticatedUser);
+
+	useEffect(() => {
+		if (!authenticatedUser) {
+			navigate("/");
+		}
+	}, []);
+
 	const [products, setProducts] = useState<Product[]>(initialProducts);
 	const [closedOrders, setClosedOrders] = useState<Product[]>([]);
 

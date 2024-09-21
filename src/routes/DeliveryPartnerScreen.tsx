@@ -21,8 +21,10 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import { AuthContext } from "@/hooks/useAuth";
 import { ChevronDownIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Order = {
 	id: string;
@@ -38,6 +40,17 @@ const initialOrders: Order[] = [
 ];
 
 export default function DeliveryPartnerScreen() {
+	const { authenticatedUser } = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	console.log("authenticatedUser", authenticatedUser);
+
+	useEffect(() => {
+		if (!authenticatedUser) {
+			navigate("/");
+		}
+	}, []);
+
 	const [orders, setOrders] = useState<Order[]>(initialOrders);
 	const [message, setMessage] = useState("");
 	const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);

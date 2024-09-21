@@ -1,3 +1,4 @@
+import { APIService } from "@/api/ApiService";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -6,19 +7,24 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import useAuth from "@/hooks/useAuth";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useAccount, useSignMessage, useConnect } from "wagmi";
-import { injected } from 'wagmi/connectors'
+import { useAccount, useConnect, useSignMessage } from "wagmi";
+import { injected } from "wagmi/connectors";
 
 export default function AuthenticationScreen() {
 	const [isConnected, setIsConnected] = useState(false);
 	const { address, isConnecting, isDisconnected } = useAccount();
 	const { signMessageAsync } = useSignMessage();
 	const { connectAsync } = useConnect();
+
+	const navigate = useNavigate();
+
+	const { login } = useAuth();
 
 	// const [isLoading, setIsLoading] = useState(true);
 
@@ -88,19 +94,55 @@ export default function AuthenticationScreen() {
 										variant="outline"
 										className="w-full bg-gray-600 text-gray-100 hover:bg-gray-500"
 										onClick={async () => {
-											if(address){
-												let sig = await signMessageAsync({ message: 'hello world' });
-												alert(sig);
+											if (address) {
+												const response = await APIService.getNonce(address);
+
+												const sig = await signMessageAsync({
+													message: response.nonce,
+												});
+												const loginResponse = await APIService.login(
+													address,
+													sig
+												);
+												// TODO: Add authenticated user to LocalStorage
+
+												if (loginResponse.error) {
+													alert(
+														"Error occurred while loggin in!\n" +
+															JSON.stringify(loginResponse.error)
+													);
+													return;
+												}
+												await login(
+													loginResponse.user,
+													loginResponse.accessToken
+												);
+
+												switch (loginResponse.user.userType) {
+													case "CUSTOMER":
+														navigate("/user");
+														break;
+													case "SUPPLIER":
+														navigate("/supplier");
+														break;
+													case "SHIPMENT_PROVIDER":
+														navigate("/deliveryPartner");
+														break;
+													default:
+														navigate("/");
+												}
 											} else {
-												if(await connectAsync({ connector: injected() })){
-													let sig = await signMessageAsync({ message: 'hello world' });
+												if (await connectAsync({ connector: injected() })) {
+													const sig = await signMessageAsync({
+														message: "hello world testing",
+													});
 													alert(sig);
 												}
 											}
 										}}
 										disabled={false}
 									>
-										🦊{" "}{address ? `Sign the message` : "Connect with MetaMask"}
+										🦊 {address ? `Sign the message` : "Connect with MetaMask"}
 									</Button>
 								) : (
 									<motion.div

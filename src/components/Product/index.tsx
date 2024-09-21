@@ -15,8 +15,15 @@ export const Product = (product: IProduct, index: number) => {
 			<CardHeader>
 				<CardTitle>{product.name}</CardTitle>
 			</CardHeader>
-			<CardContent>
-				<div className="mb-2 h-32 rounded-md bg-muted" />
+			<CardContent className="flex flex-col justify-center items-center">
+				{/* {!product.imageUrl && <div className="mb-2 h-32 rounded-md bg-muted" />} */}
+				<img
+					className={`mb-2 h-32 rounded-md bg-muted flex justify-center items-center text-xs text-slate-400 ${
+						product.imageUrl ? "" : "w-full"
+					}`}
+					alt={product.name}
+					src={product.imageUrl}
+				/>
 				<p className="text-sm text-muted-foreground">{product.description}</p>
 			</CardContent>
 			<CardFooter className="flex items-center justify-between">
