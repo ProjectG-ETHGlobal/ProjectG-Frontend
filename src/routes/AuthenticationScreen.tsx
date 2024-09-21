@@ -16,14 +16,12 @@ export default function AuthenticationScreen() {
 	// const [isLoading, setIsLoading] = useState(true);
 
 	return (
-		<div className="flex min-h-screen bg-gray-900 text-gray-100">
+		<div className="flex min-h-screen text-black bg-gray-100">
 			<div className="flex-1 flex flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
 				<div className="mx-auto w-full max-w-sm lg:w-96">
 					<div>
-						<h2 className="mt-6 text-3xl font-extrabold text-gray-100">
-							Project G
-						</h2>
-						<p className="mt-2 text-sm text-gray-400">
+						<h2 className="mt-6 text-3xl font-extrabold">Project G</h2>
+						<p className="mt-2 text-sm text-gray-900">
 							Supply Chain Management Authentication
 						</p>
 					</div>
@@ -31,19 +29,19 @@ export default function AuthenticationScreen() {
 					<div className="mt-8">
 						<div className="mt-6">
 							<div className="space-y-6">
-								<p className="text-gray-300">
+								<p className="text-gray-700">
 									Welcome to Project G, your advanced supply chain management
 									solution. Our platform leverages blockchain technology to
 									ensure transparency, traceability, and efficiency in your
 									supply chain operations.
 								</p>
-								<ul className="list-disc list-inside text-gray-400 space-y-2">
+								<ul className="list-disc list-inside text-gray-700 space-y-2">
 									<li>Secure and immutable transaction records</li>
 									<li>Real-time tracking and monitoring</li>
 									<li>Smart contract integration for automated processes</li>
 									<li>Decentralized data storage for enhanced security</li>
 								</ul>
-								<p className="text-gray-300">
+								<p className="text-gray-700">
 									Connect your MetaMask wallet to access these features and
 									revolutionize your supply chain management.
 								</p>
@@ -53,13 +51,13 @@ export default function AuthenticationScreen() {
 				</div>
 			</div>
 			<div className="hidden lg:block relative w-0 flex-1">
-				<div className="absolute inset-0 h-full w-full bg-gray-800 flex items-center justify-center">
-					<Card className="w-96 bg-gray-700 border-gray-600">
+				<div className="absolute inset-0 h-full w-full bg-gray-200 flex items-center justify-center">
+					<Card className="w-96 bg-black border-gray-600">
 						<CardHeader>
-							<CardTitle className="text-2xl font-bold text-center text-gray-100">
+							<CardTitle className="text-2xl font-bold text-center text-gray-50">
 								Authentication
 							</CardTitle>
-							<CardDescription className="text-center text-gray-400">
+							<CardDescription className="text-center text-gray-200">
 								Connect your wallet to proceed
 							</CardDescription>
 							<Link to={"/user"}>
