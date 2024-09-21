@@ -1,4 +1,4 @@
-import AuthenticationScreen from "./containers/AuthenticationScreen";
+import AuthenticationScreen from "./routes/AuthenticationScreen";
 
 export default function ProjectGAuth() {
 	return <AuthenticationScreen />;
