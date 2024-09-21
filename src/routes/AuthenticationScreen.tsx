@@ -62,6 +62,12 @@ export default function AuthenticationScreen() {
 							<CardDescription className="text-center text-gray-400">
 								Connect your wallet to proceed
 							</CardDescription>
+							<Link to={"/user"}>
+								<Button disabled>Customer Screen</Button>
+							</Link>
+							{/* <Link to={"/supplier"}>
+								<Button disabled>Supplier Screen</Button>
+							</Link> */}
 						</CardHeader>
 						<CardContent>
 							<motion.div
@@ -80,49 +86,45 @@ export default function AuthenticationScreen() {
 										}}
 										disabled={false}
 									>
-										{
-											<Link to={"/user"}>
-												<svg
-													className="w-5 h-5 mr-2"
-													viewBox="0 0 35 33"
-													fill="none"
-												>
-													<path
-														d="M32.9582 1L19.8241 10.7183L22.2665 5.09986L32.9582 1Z"
-														fill="#E17726"
-														stroke="#E17726"
-														strokeWidth="0.25"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-													<path
-														d="M2.65601 1L15.6758 10.8237L13.3459 5.09986L2.65601 1Z"
-														fill="#E27625"
-														stroke="#E27625"
-														strokeWidth="0.25"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-													<path
-														d="M28.2495 23.7763L24.7501 29.1236L32.3324 31.2218L34.5059 23.9163L28.2495 23.7763Z"
-														fill="#E27625"
-														stroke="#E27625"
-														strokeWidth="0.25"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-													<path
-														d="M1.12891 23.9163L3.28956 31.2218L10.8572 29.1236L7.37257 23.7763L1.12891 23.9163Z"
-														fill="#E27625"
-														stroke="#E27625"
-														strokeWidth="0.25"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-													/>
-												</svg>
-												Connect with MetaMask
-											</Link>
-										}
+										<svg
+											className="w-5 h-5 mr-2"
+											viewBox="0 0 35 33"
+											fill="none"
+										>
+											<path
+												d="M32.9582 1L19.8241 10.7183L22.2665 5.09986L32.9582 1Z"
+												fill="#E17726"
+												stroke="#E17726"
+												strokeWidth="0.25"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+											<path
+												d="M2.65601 1L15.6758 10.8237L13.3459 5.09986L2.65601 1Z"
+												fill="#E27625"
+												stroke="#E27625"
+												strokeWidth="0.25"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+											<path
+												d="M28.2495 23.7763L24.7501 29.1236L32.3324 31.2218L34.5059 23.9163L28.2495 23.7763Z"
+												fill="#E27625"
+												stroke="#E27625"
+												strokeWidth="0.25"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+											<path
+												d="M1.12891 23.9163L3.28956 31.2218L10.8572 29.1236L7.37257 23.7763L1.12891 23.9163Z"
+												fill="#E27625"
+												stroke="#E27625"
+												strokeWidth="0.25"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+										</svg>
+										{"Connect with MetaMask"}
 									</Button>
 								) : (
 									<motion.div
