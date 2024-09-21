@@ -68,6 +68,9 @@ export default function AuthenticationScreen() {
 							<Link to={"/supplier"}>
 								<Button disabled>Supplier Screen</Button>
 							</Link>
+							<Link to={"/deliveryPartner"}>
+								<Button disabled>Delivery Partner</Button>
+							</Link>
 						</CardHeader>
 						<CardContent>
 							<motion.div

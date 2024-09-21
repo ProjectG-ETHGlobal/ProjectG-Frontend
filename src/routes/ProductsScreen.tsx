@@ -25,7 +25,7 @@ export interface IProductType {
 	products: IProduct[];
 }
 
-export function ProductsScreen() {
+export default function ProductsScreen() {
 	const userDetails = {
 		profilePicture: "https://api.dicebear.com/9.x/pixel-art/svg",
 	};
