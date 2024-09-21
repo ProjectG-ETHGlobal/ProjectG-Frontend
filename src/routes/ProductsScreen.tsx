@@ -1,11 +1,6 @@
+import { ProductType } from "@/components/ProductType";
+import { Profile } from "@/components/Profile";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -17,7 +12,63 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Award, BarChart, Grid, Layers, Search, Zap } from "lucide-react";
+import { useState } from "react";
+
+export interface IProduct {
+	name: string;
+	price: number;
+	description: string;
+}
+
+export interface IProductType {
+	type: string;
+	products: IProduct[];
+}
+
 export function ProductsScreen() {
+	const userDetails = {
+		profilePicture: "https://api.dicebear.com/9.x/pixel-art/svg",
+	};
+	const [productsWithType, setProductsWithType] = useState<IProductType[] | []>(
+		[
+			{
+				type: "Featured",
+				products: [
+					{
+						name: "dApp 1",
+						price: 0.05,
+						description: "Decentralized Application",
+					},
+					{
+						name: "dApp 2",
+						price: 0.05,
+						description: "Decentralized Application",
+					},
+					{
+						name: "dApp 3",
+						price: 0.05,
+						description: "Decentralized Application",
+					},
+					{
+						name: "dApp 4",
+						price: 0.05,
+						description: "Decentralized Application",
+					},
+				],
+			},
+			{
+				type: "Top Charts",
+				products: [
+					{ name: "Game 1", price: 0.05, description: "Decentralized Game" },
+					{ name: "Game 2", price: 0.05, description: "Decentralized Game" },
+					{ name: "Game 3", price: 0.05, description: "Decentralized Game" },
+					{ name: "Game 4", price: 0.05, description: "Decentralized Game" },
+					{ name: "Game 5", price: 0.05, description: "Decentralized Game" },
+				],
+			},
+		]
+	);
+
 	return (
 		<div className="flex h-screen flex-col">
 			<header className="flex items-center justify-between border-b p-4">
@@ -28,9 +79,21 @@ export function ProductsScreen() {
 				<div className="flex items-center space-x-4">
 					<div className="relative">
 						<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-						<Input placeholder="Search dApps" className="w-64 pl-8" />
+						<Input placeholder="Search Products" className="w-64 pl-8" />
 					</div>
-					<Button variant="outline">Connect Wallet</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger>
+							<Profile {...userDetails} />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuLabel>My Account</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem>Profile</DropdownMenuItem>
+							<DropdownMenuItem>Billing</DropdownMenuItem>
+							<DropdownMenuItem>Team</DropdownMenuItem>
+							<DropdownMenuItem>Subscription</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</header>
 			<div className="flex flex-1 overflow-hidden">
@@ -53,41 +116,9 @@ export function ProductsScreen() {
 					</Button>
 				</nav>
 				<main className="flex-1 overflow-y-auto p-6">
-					<h2 className="mb-4 text-2xl font-semibold">Featured dApps</h2>
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-						{[...Array(8)].map((_, i) => (
-							<Card key={i}>
-								<CardHeader>
-									<CardTitle>dApp {i + 1}</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<div className="mb-2 h-32 rounded-md bg-muted" />
-									<p className="text-sm text-muted-foreground">
-										Decentralized Application
-									</p>
-								</CardContent>
-								<CardFooter className="flex items-center justify-between">
-									<span className="text-sm font-medium">0.05 ETH</span>
-									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
-											<Button variant="outline" size="sm">
-												Install
-											</Button>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent>
-											<DropdownMenuLabel>
-												Installation Options
-											</DropdownMenuLabel>
-											<DropdownMenuSeparator />
-											<DropdownMenuItem>Install to Local Node</DropdownMenuItem>
-											<DropdownMenuItem>Deploy to Network</DropdownMenuItem>
-											<DropdownMenuItem>View Source Code</DropdownMenuItem>
-										</DropdownMenuContent>
-									</DropdownMenu>
-								</CardFooter>
-							</Card>
-						))}
-					</div>
+					{productsWithType.map((productWithType: IProductType) => (
+						<ProductType {...productWithType} />
+					))}
 				</main>
 			</div>
 			<footer className="border-t p-4 text-center text-sm text-muted-foreground">

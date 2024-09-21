@@ -9,10 +9,11 @@ import {
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AuthenticationScreen() {
 	const [isConnected, setIsConnected] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+	// const [isLoading, setIsLoading] = useState(true);
 
 	return (
 		<div className="flex min-h-screen bg-gray-900 text-gray-100">
@@ -75,12 +76,12 @@ export default function AuthenticationScreen() {
 										onClick={() => {
 											console.log("Connecting to Wallet");
 											setIsConnected(!isConnected);
-											setIsLoading(false);
+											// setIsLoading(false);
 										}}
-										disabled={isLoading}
+										disabled={false}
 									>
 										{
-											<>
+											<Link to={"/user"}>
 												<svg
 													className="w-5 h-5 mr-2"
 													viewBox="0 0 35 33"
@@ -120,7 +121,7 @@ export default function AuthenticationScreen() {
 													/>
 												</svg>
 												Connect with MetaMask
-											</>
+											</Link>
 										}
 									</Button>
 								) : (
