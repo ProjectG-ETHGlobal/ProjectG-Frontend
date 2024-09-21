@@ -1,17 +1,8 @@
+import { Header } from "@/components/Header";
 import { ProductType } from "@/components/ProductType";
-import { Profile } from "@/components/Profile";
 import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 
-import { Award, BarChart, Grid, Layers, Search, Zap } from "lucide-react";
+import { Award, BarChart, Grid, Layers } from "lucide-react";
 import { useState } from "react";
 
 export interface IProduct {
@@ -29,6 +20,7 @@ export default function ProductsScreen() {
 	const userDetails = {
 		profilePicture: "https://api.dicebear.com/9.x/pixel-art/svg",
 	};
+	const showSearch = true;
 	const [productsWithType, setProductsWithType] = useState<IProductType[] | []>(
 		[
 			{
@@ -71,31 +63,7 @@ export default function ProductsScreen() {
 
 	return (
 		<div className="flex h-screen flex-col">
-			<header className="flex items-center justify-between border-b p-4">
-				<div className="flex items-center space-x-4">
-					<Zap className="h-8 w-8 text-primary" />
-					<h1 className="text-2xl font-bold">Web3 SoftwareChain</h1>
-				</div>
-				<div className="flex items-center space-x-4">
-					<div className="relative">
-						<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-						<Input placeholder="Search Products" className="w-64 pl-8" />
-					</div>
-					<DropdownMenu>
-						<DropdownMenuTrigger>
-							<Profile {...userDetails} />
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<DropdownMenuLabel>My Account</DropdownMenuLabel>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem>Profile</DropdownMenuItem>
-							<DropdownMenuItem>Billing</DropdownMenuItem>
-							<DropdownMenuItem>Team</DropdownMenuItem>
-							<DropdownMenuItem>Subscription</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				</div>
-			</header>
+			<Header {...userDetails} showSearch={showSearch} />
 			<div className="flex flex-1 overflow-hidden">
 				<nav className="w-64 space-y-2 overflow-y-auto border-r p-4">
 					<Button variant="ghost" className="w-full justify-start">

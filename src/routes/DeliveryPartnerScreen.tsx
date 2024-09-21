@@ -1,3 +1,4 @@
+import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -60,85 +61,91 @@ export default function DeliveryPartnerScreen() {
 	};
 
 	return (
-		<div className="container mx-auto py-10">
-			<h1 className="text-3xl font-bold mb-6">Delivery Partner Dashboard</h1>
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead>Order ID</TableHead>
-						<TableHead>Date of Delivery</TableHead>
-						<TableHead>Delivery Status</TableHead>
-						<TableHead>Actions</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{orders.map((order) => (
-						<TableRow key={order.id}>
-							<TableCell>{order.id}</TableCell>
-							<TableCell>{order.dateOfDelivery}</TableCell>
-							<TableCell>{order.status}</TableCell>
-							<TableCell>
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Button variant="outline">
-											Update Status <ChevronDownIcon className="ml-2 h-4 w-4" />
-										</Button>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent>
-										<DropdownMenuItem
-											onSelect={() => handleStatusChange(order.id, "delivered")}
-										>
-											Delivered
-										</DropdownMenuItem>
-										<DropdownMenuItem
-											onSelect={() => handleStatusChange(order.id, "pending")}
-										>
-											Pending
-										</DropdownMenuItem>
-										<DropdownMenuItem
-											onSelect={() => handleStatusChange(order.id, "failed")}
-										>
-											Failed
-										</DropdownMenuItem>
-										<DropdownMenuItem
-											onSelect={() => setSelectedOrderId(order.id)}
-										>
-											Send a message
-										</DropdownMenuItem>
-									</DropdownMenuContent>
-								</DropdownMenu>
-							</TableCell>
+		<>
+			<Header showSearch={false} />
+			<div className="container mx-auto py-10">
+				<h1 className="text-3xl font-bold mb-6">Delivery Partner Dashboard</h1>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Order ID</TableHead>
+							<TableHead>Date of Delivery</TableHead>
+							<TableHead>Delivery Status</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
+					</TableHeader>
+					<TableBody>
+						{orders.map((order) => (
+							<TableRow key={order.id}>
+								<TableCell>{order.id}</TableCell>
+								<TableCell>{order.dateOfDelivery}</TableCell>
+								<TableCell>{order.status}</TableCell>
+								<TableCell>
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<Button variant="outline">
+												Update Status{" "}
+												<ChevronDownIcon className="ml-2 h-4 w-4" />
+											</Button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent>
+											<DropdownMenuItem
+												onSelect={() =>
+													handleStatusChange(order.id, "delivered")
+												}
+											>
+												Delivered
+											</DropdownMenuItem>
+											<DropdownMenuItem
+												onSelect={() => handleStatusChange(order.id, "pending")}
+											>
+												Pending
+											</DropdownMenuItem>
+											<DropdownMenuItem
+												onSelect={() => handleStatusChange(order.id, "failed")}
+											>
+												Failed
+											</DropdownMenuItem>
+											<DropdownMenuItem
+												onSelect={() => setSelectedOrderId(order.id)}
+											>
+												Send a message
+											</DropdownMenuItem>
+										</DropdownMenuContent>
+									</DropdownMenu>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
 
-			<Dialog
-				open={selectedOrderId !== null}
-				onOpenChange={() => setSelectedOrderId(null)}
-			>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Send a Message</DialogTitle>
-					</DialogHeader>
-					<Textarea
-						placeholder="Type your message here..."
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						maxLength={5000}
-						className="min-h-[100px]"
-					/>
-					<div className="flex justify-end">
-						<Button
-							onClick={() =>
-								selectedOrderId && handleMessageSubmit(selectedOrderId)
-							}
-						>
-							Submit Message
-						</Button>
-					</div>
-				</DialogContent>
-			</Dialog>
-		</div>
+				<Dialog
+					open={selectedOrderId !== null}
+					onOpenChange={() => setSelectedOrderId(null)}
+				>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Send a Message</DialogTitle>
+						</DialogHeader>
+						<Textarea
+							placeholder="Type your message here..."
+							value={message}
+							onChange={(e) => setMessage(e.target.value)}
+							maxLength={5000}
+							className="min-h-[100px]"
+						/>
+						<div className="flex justify-end">
+							<Button
+								onClick={() =>
+									selectedOrderId && handleMessageSubmit(selectedOrderId)
+								}
+							>
+								Submit Message
+							</Button>
+						</div>
+					</DialogContent>
+				</Dialog>
+			</div>
+		</>
 	);
 }

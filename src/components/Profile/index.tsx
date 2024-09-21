@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
+import DefaultProfilePic from "@/assets/default_profile_picture.jpeg";
 
-export const Profile = ({ profilePicture }: { profilePicture: string }) => {
+export const Profile = ({
+	profilePicture = DefaultProfilePic,
+}: {
+	profilePicture?: string;
+}) => {
 	return (
 		<>
 			{profilePicture ? (

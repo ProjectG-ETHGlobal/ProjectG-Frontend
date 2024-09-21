@@ -1,3 +1,4 @@
+import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -142,110 +143,31 @@ export default function SupplierScreen() {
 	};
 
 	return (
-		<div className="container mx-auto py-10">
-			<h1 className="text-3xl font-bold mb-6">Product Details</h1>
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead>Product ID</TableHead>
-						<TableHead>Product Name</TableHead>
-						<TableHead>Quantity</TableHead>
-						<TableHead>Price</TableHead>
-						<TableHead>Order Status</TableHead>
-						<TableHead>Actions</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{products.map((product) => (
-						<TableRow key={product.id}>
-							<TableCell>{product.id}</TableCell>
-							<TableCell>{product.name}</TableCell>
-							<TableCell>{product.quantity}</TableCell>
-							<TableCell>${product.price.toFixed(2)}</TableCell>
-							<TableCell>{product.status}</TableCell>
-							<TableCell>
-								<div className="flex space-x-2">
-									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
-											<Button variant="outline">Delivery Status</Button>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent>
-											<DropdownMenuItem>
-												<DeliveryStatus status={product.status} />
-											</DropdownMenuItem>
-										</DropdownMenuContent>
-									</DropdownMenu>
-									{product.status === "confirmed" ||
-									product.status === "shipped" ? (
-										<DropdownMenu>
-											<DropdownMenuTrigger asChild>
-												<Button variant="outline">
-													Select Partner{" "}
-													<ChevronDownIcon className="ml-2 h-4 w-4" />
-												</Button>
-											</DropdownMenuTrigger>
-											<DropdownMenuContent>
-												{deliveryPartners.map((partner) => (
-													<DropdownMenuItem
-														key={partner}
-														onSelect={() =>
-															handleSelectPartner(product.id, partner)
-														}
-													>
-														{partner}
-													</DropdownMenuItem>
-												))}
-											</DropdownMenuContent>
-										</DropdownMenu>
-									) : (
-										<>
-											<Button
-												onClick={() => handleAccept(product.id)}
-												variant="outline"
-												size="sm"
-											>
-												Accept
-											</Button>
-											<Button
-												onClick={() => handleReject(product.id)}
-												variant="outline"
-												size="sm"
-											>
-												Reject
-											</Button>
-										</>
-									)}
-								</div>
-							</TableCell>
+		<>
+			<Header showSearch={false} />
+			<div className="container mx-auto py-10">
+				<h1 className="text-3xl font-bold mb-6">Product Details</h1>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Product ID</TableHead>
+							<TableHead>Product Name</TableHead>
+							<TableHead>Quantity</TableHead>
+							<TableHead>Price</TableHead>
+							<TableHead>Order Status</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-
-			{closedOrders.length > 0 && (
-				<>
-					<Separator className="my-8" />
-					<h2 className="text-2xl font-bold mb-4">CLOSED ORDERS</h2>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Product ID</TableHead>
-								<TableHead>Product Name</TableHead>
-								<TableHead>Quantity</TableHead>
-								<TableHead>Price</TableHead>
-								<TableHead>Order Status</TableHead>
-								<TableHead>Actions</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{closedOrders.map((product) => (
-								<TableRow key={product.id}>
-									<TableCell>{product.id}</TableCell>
-									<TableCell>{product.name}</TableCell>
-									<TableCell>{product.quantity}</TableCell>
-									<TableCell>${product.price.toFixed(2)}</TableCell>
-									<TableCell>{product.status}</TableCell>
-									<TableCell>
+					</TableHeader>
+					<TableBody>
+						{products.map((product) => (
+							<TableRow key={product.id}>
+								<TableCell>{product.id}</TableCell>
+								<TableCell>{product.name}</TableCell>
+								<TableCell>{product.quantity}</TableCell>
+								<TableCell>${product.price.toFixed(2)}</TableCell>
+								<TableCell>{product.status}</TableCell>
+								<TableCell>
+									<div className="flex space-x-2">
 										<DropdownMenu>
 											<DropdownMenuTrigger asChild>
 												<Button variant="outline">Delivery Status</Button>
@@ -256,13 +178,95 @@ export default function SupplierScreen() {
 												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
-									</TableCell>
+										{product.status === "confirmed" ||
+										product.status === "shipped" ? (
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<Button variant="outline">
+														Select Partner{" "}
+														<ChevronDownIcon className="ml-2 h-4 w-4" />
+													</Button>
+												</DropdownMenuTrigger>
+												<DropdownMenuContent>
+													{deliveryPartners.map((partner) => (
+														<DropdownMenuItem
+															key={partner}
+															onSelect={() =>
+																handleSelectPartner(product.id, partner)
+															}
+														>
+															{partner}
+														</DropdownMenuItem>
+													))}
+												</DropdownMenuContent>
+											</DropdownMenu>
+										) : (
+											<>
+												<Button
+													onClick={() => handleAccept(product.id)}
+													variant="outline"
+													size="sm"
+												>
+													Accept
+												</Button>
+												<Button
+													onClick={() => handleReject(product.id)}
+													variant="outline"
+													size="sm"
+												>
+													Reject
+												</Button>
+											</>
+										)}
+									</div>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+
+				{closedOrders.length > 0 && (
+					<>
+						<Separator className="my-8" />
+						<h2 className="text-2xl font-bold mb-4">CLOSED ORDERS</h2>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Product ID</TableHead>
+									<TableHead>Product Name</TableHead>
+									<TableHead>Quantity</TableHead>
+									<TableHead>Price</TableHead>
+									<TableHead>Order Status</TableHead>
+									<TableHead>Actions</TableHead>
 								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</>
-			)}
-		</div>
+							</TableHeader>
+							<TableBody>
+								{closedOrders.map((product) => (
+									<TableRow key={product.id}>
+										<TableCell>{product.id}</TableCell>
+										<TableCell>{product.name}</TableCell>
+										<TableCell>{product.quantity}</TableCell>
+										<TableCell>${product.price.toFixed(2)}</TableCell>
+										<TableCell>{product.status}</TableCell>
+										<TableCell>
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<Button variant="outline">Delivery Status</Button>
+												</DropdownMenuTrigger>
+												<DropdownMenuContent>
+													<DropdownMenuItem>
+														<DeliveryStatus status={product.status} />
+													</DropdownMenuItem>
+												</DropdownMenuContent>
+											</DropdownMenu>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</>
+				)}
+			</div>
+		</>
 	);
 }
