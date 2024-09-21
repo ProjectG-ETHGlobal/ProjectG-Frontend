@@ -11,8 +11,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useAccount, useSignMessage, useConnect } from "wagmi";
+import { injected } from 'wagmi/connectors'
+
 export default function AuthenticationScreen() {
 	const [isConnected, setIsConnected] = useState(false);
+	const { address, isConnecting, isDisconnected } = useAccount();
+	const { signMessageAsync } = useSignMessage();
+	const { connectAsync } = useConnect();
+
 	// const [isLoading, setIsLoading] = useState(true);
 
 	return (
@@ -80,52 +87,20 @@ export default function AuthenticationScreen() {
 									<Button
 										variant="outline"
 										className="w-full bg-gray-600 text-gray-100 hover:bg-gray-500"
-										onClick={() => {
-											console.log("Connecting to Wallet");
-											setIsConnected(!isConnected);
-											// setIsLoading(false);
+										onClick={async () => {
+											if(address){
+												let sig = await signMessageAsync({ message: 'hello world' });
+												alert(sig);
+											} else {
+												if(await connectAsync({ connector: injected() })){
+													let sig = await signMessageAsync({ message: 'hello world' });
+													alert(sig);
+												}
+											}
 										}}
 										disabled={false}
 									>
-										<svg
-											className="w-5 h-5 mr-2"
-											viewBox="0 0 35 33"
-											fill="none"
-										>
-											<path
-												d="M32.9582 1L19.8241 10.7183L22.2665 5.09986L32.9582 1Z"
-												fill="#E17726"
-												stroke="#E17726"
-												strokeWidth="0.25"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-											<path
-												d="M2.65601 1L15.6758 10.8237L13.3459 5.09986L2.65601 1Z"
-												fill="#E27625"
-												stroke="#E27625"
-												strokeWidth="0.25"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-											<path
-												d="M28.2495 23.7763L24.7501 29.1236L32.3324 31.2218L34.5059 23.9163L28.2495 23.7763Z"
-												fill="#E27625"
-												stroke="#E27625"
-												strokeWidth="0.25"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-											<path
-												d="M1.12891 23.9163L3.28956 31.2218L10.8572 29.1236L7.37257 23.7763L1.12891 23.9163Z"
-												fill="#E27625"
-												stroke="#E27625"
-												strokeWidth="0.25"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</svg>
-										{"Connect with MetaMask"}
+										🦊{" "}{address ? `Sign the message` : "Connect with MetaMask"}
 									</Button>
 								) : (
 									<motion.div
